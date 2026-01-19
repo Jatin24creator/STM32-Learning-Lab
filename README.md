@@ -9,8 +9,8 @@ This repo contains small, focused experiments ranging from basic GPIO to periphe
 - `boards/` – Board-specific experiments
 - Each board contains day-wise projects
 - Every project may include:
-  - `stm32cubeide/` – Full STM32CubeIDE project
-  - `wokwi/` – Simulation files (where applicable)
+  - `fw-stm32cubeide/` – Full STM32CubeIDE project
+  - `sim-wokwi/` – Simulation files (where applicable)
   - `README.md` – Project explanation
   - `notes.md` – Learning notes
 
