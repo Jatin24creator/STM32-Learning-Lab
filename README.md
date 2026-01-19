@@ -1,2 +1,27 @@
-# STM32-Learning-Lab
-A daily learning log of STM32 embedded development projects across multiple boards, starting with STM32C031C6. Includes simulations (Wokwi), STM32CubeIDE projects, and well-documented experiments from basics to peripherals.
+# STM32 Learning Lab
+
+A hands-on learning repository documenting my journey with STM32 microcontrollers across multiple boards.
+
+This repo contains small, focused experiments ranging from basic GPIO to peripherals and system-level concepts. Each experiment is structured for clarity, reproducibility, and incremental learning.
+
+## Structure
+
+- `boards/` – Board-specific experiments
+- Each board contains day-wise projects
+- Every project may include:
+  - `stm32cubeide/` – Full STM32CubeIDE project
+  - `wokwi/` – Simulation files (where applicable)
+  - `README.md` – Project explanation
+  - `notes.md` – Learning notes
+
+## Tools Used
+- STM32CubeIDE
+- STM32 HAL
+- Wokwi Simulator
+
+## Boards
+- STM32C031C6 (current)
+- More STM32 series planned
+
+## License
+MIT License

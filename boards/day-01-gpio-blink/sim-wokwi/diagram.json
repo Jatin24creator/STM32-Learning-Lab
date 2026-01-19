@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "author": "Jatin Rana",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-st-nucleo-c031c6", "id": "nucleo", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 92.4,
+      "left": 282.2,
+      "attrs": { "color": "red", "flip": "" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 167.15,
+      "left": 278.4,
+      "attrs": { "value": "1000" }
+    }
+  ],
+  "connections": [
+    [ "$serialMonitor:TX", "nucleo:PA3", "", [] ],
+    [ "$serialMonitor:RX", "nucleo:PA2", "", [] ],
+    [ "nucleo:PA5", "r1:1", "green", [ "h0" ] ],
+    [ "nucleo:GND.8", "led1:C", "black", [ "h0" ] ],
+    [ "led1:A", "r1:2", "green", [ "v0", "h38.4" ] ]
+  ],
+  "dependencies": {}
+}
