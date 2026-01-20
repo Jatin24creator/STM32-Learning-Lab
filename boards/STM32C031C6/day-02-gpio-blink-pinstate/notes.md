@@ -1,5 +1,6 @@
 # Day 02 – GPIO Pin State Control Notes
 
+- https://wokwi.com/projects/453639341552472065
 ## Key Learnings
 - GPIO output can be controlled explicitly using `HAL_GPIO_WritePin()`
 - `GPIO_PinState` has two valid states:
@@ -34,3 +35,6 @@
 - Use hardware timer instead of `HAL_Delay()`
 - Toggle pin based on a state variable
 - Implement button-controlled pin state
+## Youtube Tutorial Link I followed:
+- https://www.youtube.com/watch?v=3vHNdgwgCWE&list=PLjRK6WMJhWom_IswjovnIhhi4rJcDYBgU&index=7
+- https://wokwi.com/projects/453639341552472065
