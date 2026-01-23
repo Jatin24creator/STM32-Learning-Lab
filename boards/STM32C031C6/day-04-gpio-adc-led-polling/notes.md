@@ -1,36 +1,49 @@
-# Day 04 – ADC Based LED Control (Polling)
+# Day 05 – Multi-Channel ADC Debugging & Learning (STM32)
 
-- https://wokwi.com/projects/453736605841302529
+- https://wokwi.com/projects/453851267401373697
 
 ## What I Learned
-- Basics of ADC (Analog-to-Digital Converter) in STM32
-- Understanding 12-bit ADC resolution (0–4095 digital range)
-- Starting and stopping ADC using HAL APIs
-- Using `HAL_ADC_PollForConversion()` to wait for ADC conversion
-- Controlling an LED based on analog input threshold
+- How to read multiple ADC channels using STM32 HAL
+- Difference between **ADC scan mode** and **single conversion mode**
+- Proper way to switch ADC channels manually at runtime
+- Importance of correct ADC configuration parameters (`Rank`, `SamplingTime`)
+- How ADC misconfiguration can lead to silent and confusing bugs
 
 ## Observations
-- ADC conversion returns a digital value proportional to input voltage
-- Mid-scale value (~2048) represents half of the reference voltage
-- LED turns ON or OFF based on comparison with threshold
-- ADC polling is a blocking operation inside the main loop
+- ADC works reliably only when its configuration model is consistent
+- STM32 HAL does not throw errors for logical ADC misconfigurations
+- Both channels appeared to give incorrect or identical readings when configured incorrectly
+- Stopping the ADC before reconfiguring the channel is mandatory
 
-## Differences Between Wokwi & CubeIDE
-- Wokwi provides virtual potentiometer for easy analog input testing
-- CubeIDE requires proper ADC pin configuration and channel selection
-- ADC initialization and clock configuration are auto-generated in CubeIDE
-- Real hardware requires stable reference voltage and proper wiring
+## Mistake That Was Made (Important Lesson)
+- **ADC scan sequence mode was enabled** (`ADC_SCAN_SEQ_FIXED`)
+- **Number of conversions was set to 1**, which contradicts scan mode behavior
+- ADC channels were being **reconfigured dynamically inside the main loop**
+- Incorrect ADC rank (`ADC_RANK_CHANNEL_NUMBER`) was used instead of `ADC_REGULAR_RANK_1`
+- Sampling time was not explicitly set during channel reconfiguration
 
-## Issues Faced
-- Understanding ADC resolution and digital value range
-- Knowing when to start and stop ADC conversion
-- Selecting the correct ADC channel for the input pin
+➡️ This resulted in undefined ADC behavior and incorrect readings.
+
+## Correct Approach Identified
+- Use **single conversion mode** when switching channels manually
+- Disable scan sequencing when only one channel is converted at a time
+- Configure ADC channels completely each time:
+  - Channel
+  - Rank
+  - Sampling time
+- Stop ADC before changing channel configuration
+
+## Differences Between Working & Non-Working Implementation
+- Working code used **manual channel switching with single conversion**
+- Non-working code mixed **scan mode with dynamic channel reconfiguration**
+- Proper rank and sampling time were explicitly set in the working version
+- ADC initialization and runtime behavior were aligned in the working code
 
 ## Improvements / Next Steps
-- Replace polling with ADC interrupt or DMA
-- Map ADC value to LED brightness using PWM
-- Print ADC values over UART for debugging
-- Test ADC behavior on physical hardware
+- Implement proper ADC scan mode with multiple conversions
+- Explore ADC + DMA for efficient multi-channel sampling
+- Add UART prints for ADC values to improve debugging
+- Document ADC usage patterns clearly for future reference
 
 ## Youtube Tutorial Link I followed:
-- https://www.youtube.com/watch?v=xS4kvsU7ajw&list=PLjRK6WMJhWom_IswjovnIhhi4rJcDYBgU&index=6
+- https://www.youtube.com/watch?v=JIhZT1gDP4Q&list=PLjRK6WMJhWom_IswjovnIhhi4rJcDYBgU&index=5
