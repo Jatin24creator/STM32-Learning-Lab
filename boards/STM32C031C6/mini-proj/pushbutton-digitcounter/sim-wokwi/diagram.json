@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "author": "Jatin Rana",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-st-nucleo-c031c6", "id": "nucleo", "top": 0.83, "left": -77.78, "attrs": {} },
+    { "type": "wokwi-7segment", "id": "sevseg1", "top": 148.98, "left": 293.08, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 179,
+      "left": -163.2,
+      "attrs": { "color": "green", "xray": "1" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 205.55,
+      "left": -240,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-led", "id": "led1", "top": -22.8, "left": 215, "attrs": { "color": "red" } },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 52.8,
+      "left": 210.65,
+      "rotate": 90,
+      "attrs": { "value": "1000" }
+    }
+  ],
+  "connections": [
+    [ "$serialMonitor:TX", "nucleo:PA3", "", [] ],
+    [ "$serialMonitor:RX", "nucleo:PA2", "", [] ],
+    [ "sevseg1:DP", "nucleo:PB7", "green", [ "v105.6", "h-172.8" ] ],
+    [ "nucleo:PB6", "sevseg1:G", "green", [ "h-12.25", "v48", "h220.8", "v-249.6", "h-76.8" ] ],
+    [ "nucleo:PB3", "sevseg1:D", "green", [ "h0" ] ],
+    [ "nucleo:PB4", "sevseg1:E", "green", [ "h0" ] ],
+    [ "sevseg1:F", "nucleo:PB5", "green", [ "v-8.76", "h-28.8", "v96" ] ],
+    [ "sevseg1:C", "nucleo:PB2", "green", [ "v57.6", "h-105.6", "v-86.4" ] ],
+    [ "nucleo:5V.3", "sevseg1:COM.2", "red", [ "v-19.2", "h141.35" ] ],
+    [ "sevseg1:COM.1", "nucleo:5V.3", "green", [ "h0" ] ],
+    [ "nucleo:PB1", "sevseg1:B", "green", [ "h9.6", "v38.4", "h403.2", "v-163.2" ] ],
+    [ "nucleo:PB0.1", "sevseg1:A", "green", [ "h16.55", "v9.6", "h172.8", "v-163.2", "h-19.2" ] ],
+    [ "nucleo:3V3.2", "btn1:1.l", "green", [ "h-9.15", "v-96", "h-86.4" ] ],
+    [ "r1:2", "btn1:2.l", "green", [ "v0" ] ],
+    [ "nucleo:GND.6", "r1:1", "black", [ "h29.25", "v115.2", "h-230.4" ] ],
+    [ "led1:A", "r2:1", "green", [ "v0" ] ],
+    [ "nucleo:GND.9", "led1:C", "black", [ "h-11.95", "v-76.8" ] ],
+    [ "nucleo:PA7", "r2:2", "green", [ "h-12.25", "v-96" ] ],
+    [ "btn1:2.r", "nucleo:PA6", "green", [ "h221", "v-28.6" ] ]
+  ],
+  "dependencies": {}
+}
