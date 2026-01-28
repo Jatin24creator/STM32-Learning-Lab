@@ -31,10 +31,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-// LEDS TO BE SET "DO"
-#define D0S GPIO_PIN_6|GPIO_PIN_7
-// LEDS TO BE RESET "DO"
-#define D0R GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5
+// common anode configuration
+#define D0S GPIO_PIN_6|GPIO_PIN_7 //SET == OFF
+#define D0R GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5 //RESET == 1
 
 #define D1S GPIO_PIN_0|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7
 #define D1R GPIO_PIN_1|GPIO_PIN_2
@@ -84,54 +83,55 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int current_digit = 0;
-void display_digit(int current_digit){
-	 HAL_GPIO_WritePin(GPIOB,
-	        GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 |
-	        GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7,
-	        GPIO_PIN_SET);
-	switch (current_digit){
+int digit_count = 0;
+void counter(int digit_count){
+	//Turn off all the pins SET
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|
+			GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, SET);
+	switch(digit_count){
 	case 0:
-		 HAL_GPIO_WritePin(GPIOB, D0S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D0R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D0S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D0R, RESET); //Turn the ones on
+		break;
 	case 1:
-		 HAL_GPIO_WritePin(GPIOB, D1S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D1R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D1S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D1R, RESET); //Turn the ones on
+		break;
 	case 2:
-		 HAL_GPIO_WritePin(GPIOB, D2S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D2R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D2S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D2R, RESET); //Turn the ones on
+		break;
 	case 3:
-		 HAL_GPIO_WritePin(GPIOB, D3S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D3R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D3S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D3R, RESET); //Turn the ones on
+		break;
 	case 4:
-		 HAL_GPIO_WritePin(GPIOB, D4S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D4R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D4S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D4R, RESET); //Turn the ones on
+		break;
 	case 5:
-		 HAL_GPIO_WritePin(GPIOB, D5S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D5R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D5S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D5R, RESET); //Turn the ones on
+		break;
 	case 6:
-		 HAL_GPIO_WritePin(GPIOB, D6S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D6R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D6S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D6R, RESET); //Turn the ones on
+		break;
 	case 7:
-		 HAL_GPIO_WritePin(GPIOB, D7S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D7R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D7S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D7R, RESET); //Turn the ones on
+		break;
 	case 8:
-		 HAL_GPIO_WritePin(GPIOB, D8S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D8R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D8S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D8R, RESET); //Turn the ones on
+		break;
 	case 9:
-		 HAL_GPIO_WritePin(GPIOB, D9S, GPIO_PIN_SET);
-		 HAL_GPIO_WritePin(GPIOB, D9R, GPIO_PIN_RESET);
-		 break;
+		HAL_GPIO_WritePin(GPIOB, D9S, SET); // turn the not required ones off
+		HAL_GPIO_WritePin(GPIOB, D9R, RESET); //Turn the ones on
+		break;
+
 	}
+
 }
 /* USER CODE END 0 */
 
@@ -143,6 +143,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+
 
   /* USER CODE END 1 */
 
@@ -175,23 +176,42 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  //if (button press == true)
+	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5)){
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7,SET);
+		  //increment the digit count
+		  digit_count++;
 
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6)) {
-	      current_digit++;
+		  if (digit_count >9){ //resets to zero
+			  digit_count = 0;
+		  }
+		  // display the digit via the function that displays the digit
+		  counter(digit_count);
+		  //simple debounce
+		  HAL_Delay(500);
+		  //wait until button is released
+		  
+		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5));
+	  }
 
-	      if (current_digit > 9) {
-	          current_digit = 0;
-	      }
+	 //if button2 pressed ==0
+	  else if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6)){
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7,SET);
+		  //then decrease by 1
+		  digit_count--;
+		  if(digit_count<0){
+			  digit_count =9;
+		  }
+		  //display the digit
+		  counter(digit_count);
+		  //debounce
+		  HAL_Delay(500);
+		  // wait until button released
+		
+		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6));
 
-	 display_digit(current_digit);
-
-	      // simple debounce
-	      HAL_Delay(300);
-
-	      // wait until button is released
-	      while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6));}
-
-
+	  }
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7,RESET);
   }
   /* USER CODE END 3 */
 }
@@ -249,7 +269,6 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
@@ -257,9 +276,6 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
                           |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PA5 PA6 */
   GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_6;
@@ -282,13 +298,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PD3 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

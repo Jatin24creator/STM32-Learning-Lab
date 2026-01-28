@@ -178,6 +178,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  //if (button press == true)
 	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5)){
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7,SET);
 		  //increment the digit count
 		  digit_count++;
 
@@ -189,10 +190,13 @@ int main(void)
 		  //simple debounce
 		  HAL_Delay(500);
 		  //wait until button is released
+		  
 		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5));
 	  }
+
 	 //if button2 pressed ==0
 	  else if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6)){
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7,SET);
 		  //then decrease by 1
 		  digit_count--;
 		  if(digit_count<0){
@@ -203,9 +207,11 @@ int main(void)
 		  //debounce
 		  HAL_Delay(500);
 		  // wait until button released
+		
 		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6));
 
 	  }
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7,RESET);
   }
   /* USER CODE END 3 */
 }
