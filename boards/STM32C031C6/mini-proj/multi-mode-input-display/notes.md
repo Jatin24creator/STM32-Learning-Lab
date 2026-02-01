@@ -51,7 +51,6 @@
   - `GPIO_PIN_RESET` → Segment ON
   - `GPIO_PIN_SET` → Segment OFF
 - Segment control implemented using **macros** for each digit (`D0S/D0R … D9S/D9R`)
-
 **Concept:** Analog → Digital mapping
 
 ### Objective
