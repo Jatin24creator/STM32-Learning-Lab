@@ -42,6 +42,8 @@
 | Pin | Mode | Purpose |
 |---|---|---|
 | GPIOB Pins 0–7 | GPIO Output | 7-Segment Display (Segments A–G, DP) |
+| GPIOA Pin 6 | GPIO Input (Pull-up) | LED |
+| GPIOA Pin 7 | GPIO Input (Pull-up) | LED |
 
 ---
 
