@@ -267,8 +267,8 @@ int main(void)
 	  HAL_ADC_Stop(&hadc1);
 	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3)){
 		  button_counter();
-		  HAL_Delay(500);
-		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3));
+		  // HAL_Delay(500);
+		  // while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3));
 	  }else {
 		  adc(adcResult);
 	  }
