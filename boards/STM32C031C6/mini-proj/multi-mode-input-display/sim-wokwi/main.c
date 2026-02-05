@@ -62,6 +62,9 @@
 #define D9S GPIO_PIN_4|GPIO_PIN_7
 #define D9R GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_5|GPIO_PIN_6
 
+
+#define MODE_BUTTON 0
+#define MODE_ADC 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -86,7 +89,16 @@ static void MX_ADC1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int mode_flag = 0;
 int digit_count = 0;
+void mode_check_toggle(void){
+	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3)==(GPIO_PIN_RESET)){
+		mode_flag = !mode_flag; //COMPARISON
+		HAL_Delay(500);
+		while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3)==(GPIO_PIN_RESET));
+	}
+}
+
 void counter(int digit_count){
 	//Turn off all the pins SET
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|
@@ -260,16 +272,17 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  //ADC IS 12 BIT RESOLUTION SO MAX DIGITAL VALU IS 4096
-	  HAL_ADC_Start(&hadc1); //USED TO START ADC OPERATION
-	  HAL_ADC_PollForConversion(&hadc1, 100);
-	  adcResult = HAL_ADC_GetValue(&hadc1);
-	  HAL_ADC_Stop(&hadc1);
-	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3)){
+	  mode_check_toggle();
+	  if(mode_flag == 0){
 		  button_counter();
-		  HAL_Delay(500);
-		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3));
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
 	  }else {
+		  //ADC IS 12 BIT RESOLUTION SO MAX DIGITAL VALU IS 4096
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
+		  HAL_ADC_Start(&hadc1); //USED TO START ADC OPERATION
+		  HAL_ADC_PollForConversion(&hadc1, 100);
+		  adcResult = HAL_ADC_GetValue(&hadc1);
+		  HAL_ADC_Stop(&hadc1);
 		  adc(adcResult);
 	  }
 
