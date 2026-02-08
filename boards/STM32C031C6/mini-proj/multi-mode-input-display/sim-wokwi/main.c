@@ -278,12 +278,12 @@ int main(void)
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
 	  }else {
 		  //ADC IS 12 BIT RESOLUTION SO MAX DIGITAL VALU IS 4096
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
-		  HAL_ADC_Start(&hadc1); //USED TO START ADC OPERATION
-		  HAL_ADC_PollForConversion(&hadc1, 100);
-		  adcResult = HAL_ADC_GetValue(&hadc1);
-		  HAL_ADC_Stop(&hadc1);
-		  adc(adcResult);
+		  // HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
+		  // HAL_ADC_Start(&hadc1); //USED TO START ADC OPERATION
+		  // HAL_ADC_PollForConversion(&hadc1, 100);
+		  // adcResult = HAL_ADC_GetValue(&hadc1);
+		  // HAL_ADC_Stop(&hadc1);
+		  // adc(adcResult);
 	  }
 
 
